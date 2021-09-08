@@ -59,6 +59,16 @@ export function Dashboard() {
     
       <Transactions>
         <Title>Listagem</Title>
+<<<<<<< Updated upstream
+=======
+
+        <TransactionsList
+          data={data}
+          keyExtractor={item=>item.id.toString()}
+          renderItem={({ item }) => <TransactionCard data={item} />}
+         
+        />
+>>>>>>> Stashed changes
       </Transactions>
     </Container>
   );
