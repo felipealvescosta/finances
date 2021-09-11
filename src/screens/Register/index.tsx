@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
 import { useForm } from "react-hook-form";
-import * as Yup from 'yup';
-import {yupResolver} from '@hookform/resolvers/yup';
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button } from "../../components/Forms/Button";
 import { CategorySelectButton } from "../../components/Forms/CategorySelectButton";
@@ -25,13 +25,8 @@ interface FormData {
 }
 
 const schema = Yup.object().shape({
-  name: Yup
-    .string()
-    .required('Nome é obrigatório'),
-  amount: Yup
-    .number()
-    .positive('O valor não pode ser negativo')
-    .required('O preço é obrigatório')
+  name: Yup.string().required("Nome é obrigatório"),
+  amount: Yup.number().positive("O valor não pode ser negativo").typeError('Valor é obrigatório').nullable(true),
 });
 
 export const Register = () => {
@@ -40,7 +35,11 @@ export const Register = () => {
     name: "Categoria",
   });
 
-  const { control, handleSubmit, formState: {errors} } = useForm({resolver: yupResolver(schema)});
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -56,12 +55,11 @@ export const Register = () => {
   }
 
   function handleRegister(form: FormData) {
-    if(!transactionType)
-      return Alert.alert('Selectione o tipo de transação');
+    if (!transactionType) return Alert.alert("Selectione o tipo de transação");
 
-    if(category.key === 'category') 
-      return Alert.alert('Selectione uma categoria');
-      
+    if (category.key === "category")
+      return Alert.alert("Selectione uma categoria");
+
     const data = {
       name: form.name,
       amount: form.amount,
