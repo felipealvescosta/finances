@@ -12,9 +12,9 @@ export const Container = styled(TouchableOpacity)`
 `;
 export const Title = styled.Text`
   font-family: ${({theme})=> theme.fonts.regular};
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(18)}px;
 
   color: ${({theme})=> theme.color.shape};
 
-  padding: 18px;
+  padding: 14px;
 `;
