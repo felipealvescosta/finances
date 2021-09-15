@@ -1,7 +1,7 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import {Feather} from '@expo/vector-icons';
-import { GestureHandlerRootView} from 'react-native-gesture-handler';
+import { GestureHandlerRootView, RectButton} from 'react-native-gesture-handler';
 import theme from '../../global/styles/theme';
 
 interface CategoryProps {
@@ -29,7 +29,7 @@ export const Title = styled.Text`
   color:  ${({theme}) => theme.color.shape};
 `;
 
-export const Category = styled.TouchableOpacity<CategoryProps>`
+export const Category = styled(RectButton)<CategoryProps>`
   width: 100%;
   padding: ${RFValue(15)}px;
 
@@ -41,7 +41,7 @@ export const Category = styled.TouchableOpacity<CategoryProps>`
   };
 `;
 export const Icon = styled(Feather)`
- font-size: ${RFValue(20  )}px;
+ font-size: ${RFValue(20)}px;
 
  margin-right: 18px;
 `;
@@ -63,7 +63,7 @@ export const Footer = styled.View`
   width: 100%;
   padding: 24px;
 `;
-export const Button = styled.TouchableOpacity`
+export const Button = styled(RectButton)`
   width: 100%;
   background-color:  ${({theme}) => theme.color.secondary};
 `;

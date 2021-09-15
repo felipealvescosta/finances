@@ -1,7 +1,10 @@
 import React from "react";
 import { StatusBar } from "react-native";
 import { HighlightCard } from "../../components/HighlightCard";
-import { TransactionCard , TransactionsCardProps} from "../../components/TransactionCard";
+import {
+  TransactionCard,
+  TransactionsCardProps,
+} from "../../components/TransactionCard";
 
 import {
   Container,
@@ -13,6 +16,7 @@ import {
   UserGreeting,
   UserName,
   Icon,
+  LogoutButton,
   HighlightCards,
   Transactions,
   Title,
@@ -20,14 +24,14 @@ import {
 } from "./styles";
 
 export interface DataListProps extends TransactionsCardProps {
-  id: string,
+  id: string;
 }
 
 export function Dashboard() {
   const data: DataListProps[] = [
     {
-      id: '1',
-      type: 'positive',
+      id: "1",
+      type: "positive",
       title: "Desenvolvimento de Sites",
       amount: "R$ 12.000,00",
       category: {
@@ -37,8 +41,8 @@ export function Dashboard() {
       date: "10/09/2021",
     },
     {
-      id: '2',
-      type: 'negative',
+      id: "2",
+      type: "negative",
       title: "Aluguel AP",
       amount: "R$ 330,00",
       category: {
@@ -48,8 +52,8 @@ export function Dashboard() {
       date: "10/09/2021",
     },
     {
-      id: '3',
-      type: 'positive',
+      id: "3",
+      type: "positive",
       title: "Desenvolvimento de App",
       amount: "R$ 1.000,00",
       category: {
@@ -77,7 +81,9 @@ export function Dashboard() {
               <UserName>Felipe</UserName>
             </User>
           </UserInfo>
-          <Icon name={"power"} />
+          <LogoutButton>
+            <Icon name={"power"} />
+          </LogoutButton>
         </UserWrapper>
       </Header>
 
@@ -107,9 +113,8 @@ export function Dashboard() {
 
         <TransactionsList
           data={data}
-          keyExtractor={item=>item.id}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
-         
         />
       </Transactions>
     </Container>
