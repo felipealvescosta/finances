@@ -3,9 +3,9 @@ import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../../components/Forms/Button";
@@ -30,7 +30,11 @@ interface FormData {
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Nome é obrigatório"),
-  amount: Yup.number().positive("O valor não pode ser negativo").typeError('Valor é obrigatório').nullable(true),
+  amount: Yup.number()
+    .positive("O valor não pode ser negativo")
+    .typeError("Valor é obrigatório")
+    .required("Valor é obrigatório")
+    .nullable(true),
 });
 
 export const Register = () => {
@@ -72,33 +76,29 @@ export const Register = () => {
       amount: form.amount,
       type: transactionType,
       category: category.key,
-      date: new Date()
+      date: new Date(),
     };
 
     try {
-      const dataKey = '@gofinances:transactions';
+      const dataKey = "@gofinances:transactions";
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
-      const dataFormated = [
-        ...currentData,
-        newTransaction
-      ];
+      const dataFormated = [...currentData, newTransaction];
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormated));
 
       reset();
-      setTransactionType('');
+      setTransactionType("");
       setCategory({
         key: "category",
         name: "Categoria",
       });
 
-      navigation.navigate('Dashboard');
-
-    }catch(error){
+      navigation.navigate("Dashboard");
+    } catch (error) {
       console.log(error);
-      Alert.alert('Não foi possível salvar!');
+      Alert.alert("Não foi possível salvar!");
     }
   }
 
@@ -146,10 +146,7 @@ export const Register = () => {
               onPress={handleOpenSelectCategoryModal}
             />
           </Fields>
-          <Button 
-            title="Enviar" 
-            onPress={handleSubmit(handleRegister)} 
-          />
+          <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
         </Form>
 
         <Modal visible={categoryModalOpen}>
