@@ -58,14 +58,22 @@ export function Dashboard() {
   ) {
     const lastTransactions = new Date(
       Math.max.apply(
-      Math,
-      colletion
-        .filter((transaction) => transaction.type === type)
-        .map((transaction) => new Date(transaction.date).getTime())
-    ));
+        Math,
+        colletion
+          .filter((transaction) => transaction.type === type)
+          .map((transaction) => new Date(transaction.date).getTime())
+      )
+    );
 
     return `${lastTransactions.getDate()} de ${lastTransactions.toLocaleString(
-      'pt-bt', { month:'long' })}`
+      "pt-bt",
+      { month: "long" }
+    )}`;
+  }
+
+  async function clearItem() {
+    const dataKey = "@gofinances:transactions";
+    await AsyncStorage.removeItem(dataKey);
   }
 
   async function loadTrasanction() {
@@ -138,10 +146,6 @@ export function Dashboard() {
 
     setLoading(false);
   }
-
-  useEffect(() => {
-    loadTrasanction();
-  }, []);
 
   useFocusEffect(
     useCallback(() => {
