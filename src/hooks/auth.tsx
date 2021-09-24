@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState, useContext } from "react";
 
-// const {CLIENT_ID} = process.env;
-// const {REDIRECT_URI = process.env;
+const {CLIENT_ID} = process.env;
+const {REDIRECT_URI} = process.env;
 
 import * as AuthSession from 'expo-auth-session';
 
@@ -37,8 +37,6 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   async function signInWithGoogle() {
     try {
-      const CLIENT_ID = '1006115892400-0lorgvb0aj8hmf3n2kom4ge4mdbhhc1u.apps.googleusercontent.com';
-      const REDIRECT_URI = 'https://auth.expo.io/@felipealvescosta/gofinance';
       const RESPONSE_TYPE = 'token';
       const SCOPE = encodeURI('profile email');
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
