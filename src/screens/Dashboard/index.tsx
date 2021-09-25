@@ -9,6 +9,8 @@ import {
   TransactionsCardProps,
 } from "../../components/TransactionCard";
 
+import {useAuth} from '../../hooks/auth';
+
 import {
   Container,
   Header,
@@ -51,6 +53,7 @@ export function Dashboard() {
   );
 
   const theme = useTheme();
+  const {signOut, user} = useAuth();
 
   function getLastTransaction(
     colletion: DataListProps[],
@@ -72,12 +75,12 @@ export function Dashboard() {
   }
 
   async function clearItem() {
-    const dataKey = "@gofinances:transactions";
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     await AsyncStorage.removeItem(dataKey);
   }
 
   async function loadTrasanction() {
-    const dataKey = "@gofinances:transactions";
+    const dataKey =  `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
 
     const data = response ? JSON.parse(response) : [];
@@ -167,15 +170,15 @@ export function Dashboard() {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: "https://xesque.rocketseat.dev/users/avatar/profile-89688173-f596-4fd8-ba31-947fc5aa2d4a-1596847074972.jpg",
+                    uri: user.photo,
                   }}
                 />
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Felipe</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
-              <LogoutButton>
+              <LogoutButton onPress={signOut}>
                 <Icon name={"power"} />
               </LogoutButton>
             </UserWrapper>
@@ -192,13 +195,13 @@ export function Dashboard() {
               type="down"
               title="Saída"
               amount={highlightData.expensive.amount}
-              lastTransaction="Pagamento"
+              lastTransaction={highlightData.expensive.lastTransactions}
             />
             <HighlightCard
               type="total"
               title="Total"
               amount={highlightData.total.amount}
-              lastTransaction="Salto"
+              lastTransaction="Saldo"
             />
           </HighlightCards>
 
