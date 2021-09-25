@@ -2,12 +2,12 @@ import "react-native-gesture-handler";
 import "intl";
 import "intl/locale-data/jsonp/pt-BR";
 
-
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "styled-components";
 import AppLoading from "expo-app-loading";
 
+import {AuthProvider, useAuth} from './src/hooks/auth'
+import { Routes } from "./src/routes";
 import theme from "./src/global/styles/theme";
 import {
   useFonts,
@@ -16,12 +16,6 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
-import { SignIn } from "./src/screens/SignIn";
-
-import { AppRoutes } from "./src/routes/app.routes";
-
-import { AuthProvider } from "./src/hooks/auth";
-
 export default function App() {
   const [fonstLoaded] = useFonts({
     Poppins_400Regular,
@@ -29,19 +23,17 @@ export default function App() {
     Poppins_700Bold,
   });
 
-  if (!fonstLoaded) {
+  const {userLoading} = useAuth();
+
+  if (!fonstLoaded || userLoading) {
     return <AppLoading />;
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-
-        <AuthProvider>
-          <SignIn />
-        </AuthProvider>
-        
-      </NavigationContainer>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
